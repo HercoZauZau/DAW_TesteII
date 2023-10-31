@@ -44,7 +44,8 @@ class UsuarioController {
 
   async update(req, res) {
     try {
-      const usuario = await Usuario.findByPk(req.usuarioId);
+      console.log(req.params.id);
+      const usuario = await Usuario.findByPk(req.params.id);
 
       if (!usuario) {
         return res.status(400).json({

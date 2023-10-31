@@ -7,12 +7,12 @@ export default class Restaurante extends Model {
         nome: {
           type: Sequelize.STRING,
           defaultValue: '',
-          validate: {
-            len: {
-              args: [3, 50],
-              msg: 'Nome deve ter entre 3 e 50 caracteres.',
-            },
-          },
+          // validate: {
+          // len: {
+          // args: [3, 50],
+          // msg: 'Nome deve ter entre 3 e 50 caracteres.',
+          // },
+          // },
         },
 
         info: {

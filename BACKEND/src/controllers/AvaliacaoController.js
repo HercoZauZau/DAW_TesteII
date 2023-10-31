@@ -77,7 +77,7 @@ class AvaliacaoController {
       }
 
       console.log(req.body);
-      const avaliacaoAtualizado = await Avaliacao.update(req.body);
+      const avaliacaoAtualizado = await avaliacao.update(req.body);
 
       return res.json(avaliacaoAtualizado);
     } catch (e) {
