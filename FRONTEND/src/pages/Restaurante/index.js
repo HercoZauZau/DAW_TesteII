@@ -3,7 +3,7 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { get } from 'lodash';
+import { get, toInteger } from 'lodash';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -28,6 +28,7 @@ export default function Profile() {
   const [horario, setHorario] = React.useState('');
   const [local, setLocal] = React.useState('');
   const [cozinha, setCozinha] = React.useState('');
+  const [media, setMedia] = React.useState(0);
   const [avaliacoes, setAvaliacoes] = React.useState([]);
   // const [photos, setPhotos] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -49,14 +50,17 @@ export default function Profile() {
         console.log(avaliacao);
 
         let lista = [];
+        let notaMedia = 0;
 
         for (let i = 0; i < avaliacao.data.length; i++) {
           if (avaliacao.data[i].rest_id == id) {
             // console.log(avaliacao.data[i]);
             // setAvaliacoes((avalia) => [...avalia, avaliacao.data[i]]);
             lista.push(avaliacao.data[i]);
+            notaMedia += toInteger(avaliacao.data[i].nota);
 
             setAvaliacoes([...lista]);
+            setMedia(notaMedia);
           }
         }
 
@@ -157,7 +161,7 @@ export default function Profile() {
             <span>Peso</span> <span>{local}</span>
           </div>
 
-          <Link to={`/profile/${id}/edit`}>
+          <Link to={`/novorest/${id}`}>
             <button type="button">Editar</button>
           </Link>
         </div>
@@ -166,9 +170,14 @@ export default function Profile() {
 
         <div>
           <Link to={`/avaliacao/${id}`}>
-            <span>AVALIAR</span>
+            <button type="button">AVALIAR</button>
           </Link>
         </div>
+
+        <span>
+          Nota media:
+          {avaliacoes.length > 1 ? (media / avaliacoes.length).toFixed(1) : 0}
+        </span>
 
         <div>
           {avaliacoes.length > 1 ? (

@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import MySessionRoutes from './MySessionRoutes';
 import Home from '../pages/Home';
 import Restaurante from '../pages/Restaurante';
+import NovoRestaurante from '../pages/NovoRestaurante';
 import Avaliacao from '../pages/Avaliacao';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
@@ -20,6 +21,24 @@ export default function MyRoutes() {
         element={
           <MySessionRoutes>
             <Home />
+          </MySessionRoutes>
+        }
+      />
+
+      <Route
+        path="/novorest"
+        element={
+          <MySessionRoutes>
+            <NovoRestaurante />
+          </MySessionRoutes>
+        }
+      />
+
+      <Route
+        path="/novorest/:id"
+        element={
+          <MySessionRoutes>
+            <NovoRestaurante />
           </MySessionRoutes>
         }
       />
@@ -45,7 +64,7 @@ export default function MyRoutes() {
       <Route
         path="/profile/"
         element={
-          <MySessionRoutes isClosed>
+          <MySessionRoutes>
             <ProfileRegister />
           </MySessionRoutes>
         }
@@ -54,7 +73,7 @@ export default function MyRoutes() {
       <Route
         path="/profile/:id"
         element={
-          <MySessionRoutes isClosed>
+          <MySessionRoutes>
             <ProfileRegister />
           </MySessionRoutes>
         }

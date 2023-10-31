@@ -15,9 +15,10 @@ export default function ProfileRegister() {
 
   const { id } = useParams();
   const [nome, setNome] = React.useState('');
-  const [sobrenome, setSobrenome] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [info, setInfo] = React.useState('');
+  const [horario, setHorario] = React.useState('');
+  const [local, setLocal] = React.useState('');
+  const [cozinha, setCozinha] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -27,12 +28,13 @@ export default function ProfileRegister() {
       try {
         setIsLoading(true);
 
-        const { data } = await axios.get(`/usuario/${id}`);
+        const { data } = await axios.get(`/restaurante/${id}`);
 
         setNome(data.nome);
-        setSobrenome(data.sobrenome);
-        setEmail(data.email);
-        setPassword(data.password);
+        setInfo(data.info);
+        setCozinha(data.cozinha);
+        setHorario(data.horario);
+        setLocal(data.local);
 
         setIsLoading(false);
       } catch (error) {
@@ -55,23 +57,25 @@ export default function ProfileRegister() {
       setIsLoading(true);
 
       if (id) {
-        await axios.put(`/usuario/${id}`, {
+        await axios.put(`/restaurante/${id}`, {
           nome,
-          sobrenome,
-          email,
-          // password,
+          info,
+          cozinha,
+          horario,
+          local,
         });
 
-        toast.success('Perfil editado com sucesso');
+        toast.success('Restaurante editado com sucesso');
       } else {
-        await axios.post('/usuario', {
+        await axios.post('/restaurante/', {
           nome,
-          sobrenome,
-          email,
-          password,
+          info,
+          cozinha,
+          horario,
+          local,
         });
 
-        toast.success('Perfil criado com sucesso');
+        toast.success('Restaurante criado com sucesso');
       }
 
       setIsLoading(false);
@@ -96,7 +100,7 @@ export default function ProfileRegister() {
     <Container>
       <Loading isLoading={isLoading} />
 
-      <h1>{id ? 'Editar Perfil' : 'Registar Perfil'}</h1>
+      <h1>{id ? 'Editar Restaurante' : 'Registar Restaurante'}</h1>
 
       <Form onSubmit={handleSubmit}>
         <label htmlFor="nome">
@@ -109,33 +113,43 @@ export default function ProfileRegister() {
           />
         </label>
 
-        <label htmlFor="sobrenome">
-          <span>Sobrenome</span>
+        <label htmlFor="info">
+          <span>info</span>
 
           <input
             type="text"
-            value={sobrenome}
-            onChange={(e) => setSobrenome(e.target.value)}
+            value={info}
+            onChange={(e) => setInfo(e.target.value)}
           />
         </label>
 
-        <label htmlFor="email">
-          <span>E-mail</span>
+        <label htmlFor="horario">
+          <span>horario</span>
 
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={horario}
+            onChange={(e) => setHorario(e.target.value)}
           />
         </label>
 
-        <label htmlFor="password">
-          <span>Password</span>
+        <label htmlFor="local">
+          <span>local</span>
 
           <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            value={local}
+            onChange={(e) => setLocal(e.target.value)}
+          />
+        </label>
+
+        <label htmlFor="cozinha">
+          <span>cozinha</span>
+
+          <input
+            type="text"
+            value={cozinha}
+            onChange={(e) => setCozinha(e.target.value)}
           />
         </label>
 

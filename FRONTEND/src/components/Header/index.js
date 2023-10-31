@@ -18,6 +18,8 @@ export default function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const name = useSelector((state) => state.auth.user.nome);
 
+  const userId = 1;
+
   const handleLogout = (e) => {
     e.preventDefault();
 
@@ -28,15 +30,19 @@ export default function Header() {
 
   return (
     <Nav>
-      <Link to="/">
-        <FaHome />
+      <Link to="/profile">
+        <span>Sign Up</span>
+      </Link>
+
+      <Link to={`/profile/${userId}`}>
+        <span>Editar Conta</span>
       </Link>
 
       <Link to="/">
         <span>Home</span>
       </Link>
 
-      <Link to="/">
+      <Link to="/novorest">
         <span>Novo Restaurante</span>
       </Link>
 

@@ -73,9 +73,9 @@ export default function ProfileRegister() {
 
       if (notaExiste) {
         await axios.put(`/avaliacao/${avaliacaoID}`, {
-          user_id: toInteger(userId),
-          rest_id: toInteger(id),
-          nota: 0,
+          // user_id: toInteger(userId),
+          // rest_id: toInteger(id),
+          // nota: 0,
           comentario,
         });
 
@@ -123,6 +123,8 @@ export default function ProfileRegister() {
           <BsFillStarFill />
           <BsFillStarFill />
         </span>
+
+        <span>{nota}</span>
 
         <label htmlFor="comentario">
           <span>Comentario</span>
