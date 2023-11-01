@@ -43,4 +43,8 @@ export default class Restaurante extends Model {
     );
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.FotoR, { foreignKey: 'rest_id' });
+  }
 }

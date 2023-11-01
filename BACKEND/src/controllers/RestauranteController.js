@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Restaurante from '../models/Restaurante';
 import FotoR from '../models/FotoR';
 
@@ -7,11 +6,11 @@ class RestauranteController {
     try {
       const restaurante = await Restaurante.findAll({
         // attributes: ['id', 'nome'],
-        // order: [['id', 'DESC'], [FotoR, 'id', 'DESC']],
-        // include: {
-        //   model: FotoR,
-        //   attributes: ['filename', 'url'],
-        // },
+        order: [['id', 'DESC'], [FotoR, 'id', 'DESC']],
+        include: {
+          model: FotoR,
+          attributes: ['filename', 'url'],
+        },
       });
       return res.json(restaurante);
     } catch (e) {
@@ -45,11 +44,11 @@ class RestauranteController {
 
       const restaurante = await Restaurante.findByPk(id, {
         // attributes: ['id', 'nome'],
-        // order: [['id', 'DESC'], [FotoR, 'id', 'DESC']],
-        // include: {
-        // model: FotoR,
-        // attributes: ['url', 'filename'],
-        // },
+        order: [['id', 'DESC'], [FotoR, 'id', 'DESC']],
+        include: {
+          model: FotoR,
+          attributes: ['url', 'filename'],
+        },
       });
 
       if (!restaurante) {

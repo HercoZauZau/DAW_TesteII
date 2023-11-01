@@ -3,12 +3,13 @@ import multerConfig from '../config/multerConfig';
 
 import FotoR from '../models/FotoR';
 
-const upload = multer(multerConfig).single('fotoR');
+const upload = multer(multerConfig).single('foto');
 
 class FotoRController {
   store(req, res) {
     return upload(req, res, async (error) => {
       if (error) {
+        // console.log(error);
         return res.status(400).json({
           errors: [error.code],
         });
