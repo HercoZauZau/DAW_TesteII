@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-const */
 import React from 'react';
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
@@ -8,7 +11,7 @@ import axios from '../../services/axios';
 import { Container } from '../../styles/GlobalStyles';
 import * as actions from '../../store/modules/auth/actions';
 import Loading from '../../components/Loading';
-import { Form } from './styled';
+import { Form, Avalia } from './styled';
 
 export default function ProfileRegister() {
   const dispatch = useDispatch();
@@ -19,6 +22,8 @@ export default function ProfileRegister() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [avaliacoes, setAvaliacoes] = React.useState([]);
+  const [restaurantes, setRestaurantes] = React.useState([]);
 
   React.useEffect(() => {
     if (!id) return;
@@ -28,6 +33,20 @@ export default function ProfileRegister() {
         setIsLoading(true);
 
         const { data } = await axios.get(`/usuario/${id}`);
+        const restaurante = await axios.get(`/restaurante`);
+        const avaliacao = await axios.get(`/avaliacao`);
+
+        let lista = [];
+
+        for (let i = 0; i < avaliacao.data.length; i++) {
+          if (avaliacao.data[i].user_id == id) {
+            lista.push(avaliacao.data[i]);
+
+            setAvaliacoes([...lista]);
+          }
+        }
+
+        setRestaurantes([...restaurante.data]);
 
         setNome(data.nome);
         setSobrenome(data.sobrenome);
@@ -141,6 +160,27 @@ export default function ProfileRegister() {
 
         <button type="submit">Salvar</button>
       </Form>
+
+      <Avalia>
+        {id &&
+          avaliacoes.length > 0 &&
+          avaliacoes.map((i) => (
+            <div key={i.id}>
+              {restaurantes.map((r) => {
+                if (r.id == i.rest_id) {
+                  return (
+                    <div key={r.id}>
+                      <span>Nome do Restaurante: {r.nome}</span>
+                      <span>Comentário: {i.comentario}</span>
+                      <span>Nota: {i.nota}</span>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          ))}
+      </Avalia>
     </Container>
   );
 }

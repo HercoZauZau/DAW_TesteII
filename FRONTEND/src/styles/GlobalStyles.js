@@ -13,8 +13,8 @@ export default createGlobalStyle`
 
  body {
     font-family: sans-serif;
-    background: ${colors.primaryDarkColor};
-    color: ${colors.primaryDarkColor};
+    /* background: ${colors.primaryDarkColor}; */
+    /* color: ${colors.primaryDarkColor}; */
  }
 
  html, body, #root {

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import colors from '../../config/colors';
 
+export const Avalia = styled.div``;
+
 export const Form = styled.form`
   margin: 30px;
 
