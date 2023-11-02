@@ -20,6 +20,33 @@ class RestauranteController {
     }
   }
 
+  async orderBy(req, res) {
+    const attributes = ['nome', 'cozinha', 'local'];
+
+    try {
+      const { key } = req.params;
+
+      if (!key) {
+        return res.status(400).json({
+          errors: ['Chave necessária'],
+        });
+      }
+
+      const restaurante = await Restaurante.findAll({
+        order: [[attributes[key], 'ASC'], [FotoR, 'id', 'DESC']],
+        include: {
+          model: FotoR,
+          attributes: ['filename', 'url'],
+        },
+      });
+      return res.json(restaurante);
+    } catch (e) {
+      return res.status(500).json({
+        errors: ['Erro de conexao'],
+      });
+    }
+  }
+
   async store(req, res) {
     try {
       const restaurante = await Restaurante.create(req.body);

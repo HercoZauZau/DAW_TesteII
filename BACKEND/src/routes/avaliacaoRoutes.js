@@ -7,8 +7,8 @@ const router = new Router();
 
 router.get('/', avaliacaoController.index);
 router.get('/:id', avaliacaoController.show);
-router.post('/', avaliacaoController.store);
-router.put('/:id', avaliacaoController.update);
-router.delete('/:id', loginRequired, avaliacaoController.delete);
+router.post('/', loginRequired, avaliacaoController.store);
+router.put('/:id', loginRequired, avaliacaoController.update);
+// router.delete('/:id', loginRequired, avaliacaoController.delete);
 
 export default router;
