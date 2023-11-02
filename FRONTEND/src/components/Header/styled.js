@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import colors from '../../config/colors';
 
+export const Main = styled.main`
+  /* margin-bottom: -100px; */
+
+  .tm-nav-link {
+    margin-right: 10px;
+  }
+
+  .uname {
+    margin-left: 100px;
+  }
+`;
+
 export const Nav = styled.nav`
   background: ${colors.primaryColor};
   padding: 0 50px;

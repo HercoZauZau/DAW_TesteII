@@ -1,13 +1,11 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
 import React from 'react';
-import { forIn, get, toInteger } from 'lodash';
+import { get, toInteger } from 'lodash';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BsFillStarFill } from 'react-icons/bs';
-import { isEmail, isInt, isFloat } from 'validator';
-
 import axios from '../../services/axios';
 import { Container } from '../../styles/GlobalStyles';
 import * as actions from '../../store/modules/auth/actions';
@@ -17,7 +15,7 @@ import { Form } from './styled';
 export default function ProfileRegister() {
   const dispatch = useDispatch();
 
-  const userId = 2;
+  const userId = useSelector((state) => state.auth.user.id);
 
   const { id } = useParams();
   const [comentario, setComentario] = React.useState('');
@@ -25,6 +23,12 @@ export default function ProfileRegister() {
   const [avaliacaoID, setAvaliacaoID] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [notaExiste, setNotaExiste] = React.useState(false);
+
+  const [excluido, setExcluido] = React.useState(false);
+
+  const toggleExcluido = () => {
+    setExcluido(!excluido);
+  };
 
   React.useEffect(() => {
     if (!id) return;
@@ -47,7 +51,7 @@ export default function ProfileRegister() {
         setComentario(data.comentario);
         setAvaliacaoID(data.id);
         setNota(data.nota);
-        // console.log(data);
+        setExcluido(data.estado);
 
         setIsLoading(false);
       } catch (error) {
@@ -77,6 +81,7 @@ export default function ProfileRegister() {
           // rest_id: toInteger(id),
           // nota: 0,
           comentario,
+          estado: excluido,
         });
 
         toast.success('Avaliação editada com sucesso');
@@ -86,6 +91,7 @@ export default function ProfileRegister() {
           rest_id: toInteger(id),
           nota: 5,
           comentario,
+          estado: excluido,
         });
 
         toast.success('Avaliação criada com sucesso');
@@ -134,6 +140,13 @@ export default function ProfileRegister() {
             onChange={(e) => setComentario(e.target.value)}
           />
         </label>
+
+        <div>
+          <p>Estado: {excluido ? 'Disponivel' : 'Excluido'}</p>
+          <button type="button" onClick={toggleExcluido}>
+            Alternar Estado
+          </button>
+        </div>
 
         <button type="submit">Salvar</button>
       </Form>

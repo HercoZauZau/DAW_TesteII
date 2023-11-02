@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
@@ -7,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import axios from '../../services/axios';
 import Loading from '../../components/Loading';
-import { ProfileContainer, ProfilePicture, NewProfile } from './styled';
+import { ProfileContainer, ProfilePicture, Main } from './styled';
 
 export default function Home() {
   const [profiles, setProfiles] = React.useState([]);
@@ -33,6 +35,21 @@ export default function Home() {
 
     getData();
   }, []);
+
+  async function orderData(i) {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.get(`/restaurante/order/${i}`);
+      const Photos = get(response.data, 'FotoRs', '');
+
+      setProfiles(response.data);
+      setPhotos([...Photos]);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // const handleDeleteAsk = (e) => {
   //   e.preventDefault();
@@ -70,7 +87,7 @@ export default function Home() {
   // };
 
   return (
-    <main>
+    <Main>
       <Loading isLoading={isLoading} />
 
       <head>
@@ -83,51 +100,6 @@ export default function Home() {
 
       <body>
         <div className="container">
-          <div className="placeholder">
-            <div
-              className="parallax-window"
-              data-parallax="scroll"
-              data-image-src="img/simple-house-01.jpg"
-            >
-              <div className="tm-header">
-                <div className="row tm-header-inner">
-                  <div className="col-md-6 col-12">
-                    <img
-                      src="/img/simple-house-logo.png"
-                      alt="Logo"
-                      className="tm-site-logo"
-                    />
-                    <div className="tm-site-text-box">
-                      <h1 className="tm-site-title">Simple House</h1>
-                      <h6 className="tm-site-description">
-                        new restaurant template
-                      </h6>
-                    </div>
-                  </div>
-                  <nav className="col-md-6 col-12 tm-nav">
-                    <ul className="tm-nav-ul">
-                      <li className="tm-nav-li">
-                        <a href="index.html" className="tm-nav-link active">
-                          Home
-                        </a>
-                      </li>
-                      <li className="tm-nav-li">
-                        <a href="about.html" className="tm-nav-link">
-                          About
-                        </a>
-                      </li>
-                      <li className="tm-nav-li">
-                        <a href="contact.html" className="tm-nav-link">
-                          Contact
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <main>
             <header className="row tm-welcome-section">
               <h2 className="col-12 text-center tm-section-title">
@@ -142,23 +114,40 @@ export default function Home() {
               </p>
             </header>
 
+            <h4 className="text-center mb10">Pesquise por categorias</h4>
+
             <div className="tm-paging-links">
               <nav>
                 <ul>
-                  <li className="tm-paging-item">
-                    <a href="#" className="tm-paging-link active">
-                      Pizza
-                    </a>
+                  <li className="pointer tm-paging-item">
+                    <div
+                      onClick={() => {
+                        orderData(0);
+                      }}
+                      className="tm-paging-link"
+                    >
+                      Nome
+                    </div>
                   </li>
-                  <li className="tm-paging-item">
-                    <a href="#" className="tm-paging-link">
-                      Salad
-                    </a>
+                  <li className="pointer tm-paging-item">
+                    <div
+                      onClick={() => {
+                        orderData(1);
+                      }}
+                      className="tm-paging-link"
+                    >
+                      Tipo de Cozinha
+                    </div>
                   </li>
-                  <li className="tm-paging-item">
-                    <a href="#" className="tm-paging-link">
-                      Noodle
-                    </a>
+                  <li className="pointer tm-paging-item">
+                    <div
+                      onClick={() => {
+                        orderData(2);
+                      }}
+                      className="tm-paging-link"
+                    >
+                      Localização
+                    </div>
                   </li>
                 </ul>
               </nav>
@@ -225,10 +214,7 @@ export default function Home() {
                       descobertas ou está em busca de recomendações, você está
                       no lugar certo.
                     </p>
-                    <a
-                      href="about.html"
-                      className="tm-btn tm-btn-default tm-right"
-                    >
+                    <a href="#" className="tm-btn tm-btn-default tm-right">
                       Saiba Mais
                     </a>
                   </div>
@@ -245,6 +231,6 @@ export default function Home() {
         <script src="js/parallax.min.js" />
         <script src="js/intro.js" />
       </body>
-    </main>
+    </Main>
   );
 }

@@ -8,7 +8,7 @@ import Restaurante from '../pages/Restaurante';
 import NovoRestaurante from '../pages/NovoRestaurante';
 import Avaliacao from '../pages/Avaliacao';
 import Login from '../pages/Login';
-import Profile from '../pages/Profile';
+// import Profile from '../pages/Profile';
 import UserRegister from '../pages/UserRegister';
 import ProfileRegister from '../pages/ProfileRegister';
 import Page404 from '../pages/Page404';
@@ -97,14 +97,14 @@ export default function MyRoutes() {
         }
       />
 
-      <Route
+      {/* <Route
         path="/profile/:id/view"
         element={
           <MySessionRoutes isClosed>
             <Profile />
           </MySessionRoutes>
         }
-      />
+      /> */}
 
       <Route
         path="/login"

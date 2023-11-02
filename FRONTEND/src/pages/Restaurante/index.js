@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable prefer-const */
 /* eslint-disable no-plusplus */
@@ -6,7 +7,7 @@
 import React from 'react';
 import { get, toInteger } from 'lodash';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { FaUserCircle, FaPlus } from 'react-icons/fa';
 import { BsFillStarFill } from 'react-icons/bs';
@@ -36,7 +37,7 @@ export default function Profile() {
   const [photos, setPhotos] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const userId = 1;
+  const userId = useSelector((state) => state.auth.user.id);
 
   const dispatch = useDispatch();
 
@@ -54,15 +55,11 @@ export default function Profile() {
 
         setUsuario(usuarios.data);
 
-        // console.log(avaliacao);
-
         let lista = [];
         let notaMedia = 0;
 
         for (let i = 0; i < avaliacao.data.length; i++) {
           if (avaliacao.data[i].rest_id == id) {
-            // console.log(avaliacao.data[i]);
-            // setAvaliacoes((avalia) => [...avalia, avaliacao.data[i]]);
             lista.push(avaliacao.data[i]);
             notaMedia += toInteger(avaliacao.data[i].nota);
 
@@ -70,10 +67,6 @@ export default function Profile() {
             setMedia(notaMedia);
           }
         }
-
-        // console.log(lista);
-
-        // console.log(avaliacoes);
 
         setName(data.nome);
         setCozinha(data.cozinha);
@@ -120,8 +113,6 @@ export default function Profile() {
     } catch (error) {
       setIsLoading(false);
 
-      // console.log(error);
-
       const { status } = get(error, 'response', '');
       toast.error('Erro ao enviar a foto');
 
@@ -154,19 +145,6 @@ export default function Profile() {
           </ProfilePicture>
         )} */}
 
-          {/* <Link to={`/novorest/${id}`}>
-            <button type="button">Editar</button>
-          </Link>
-        </div>
-
-        <h3>Fotos</h3>
-
-        <div>
-          <Link to={`/avaliacao/${id}`}>
-            <button type="button">AVALIAR</button>
-          </Link>
-        </div> */}
-
           {/* <span>
           Nota media:
           {avaliacoes.length > 0 ? (media / avaliacoes.length).toFixed(1) : 0}
@@ -183,34 +161,50 @@ export default function Profile() {
               <p className="col-12 text-center">{info}</p>
             </header>
 
+            <Link to={`/novorest/${id}`}>
+              <button type="button">Editar</button>
+            </Link>
+
+            <h3>Fotos</h3>
+
+            <div>
+              <Link to={`/avaliacao/${id}`}>
+                <button type="button">AVALIAR</button>
+              </Link>
+            </div>
+
             <div className="tm-container-inner tm-persons">
               <div className="row">
                 {avaliacoes.length > 0 &&
-                  avaliacoes.map((i) => (
-                    <article key={i.id} className="col-lg-6">
-                      <figure className="tm-person">
-                        <img
-                          src="/img/about-01.jpg"
-                          alt="Image"
-                          className="cmtfoto img-fluid tm-person-img"
-                        />
-                        <figcaption className="tm-person-description">
-                          {usuario.map((user) =>
-                            user.id == i.user_id ? (
-                              <h4 className="tm-person-name">
-                                {user.nome} {user.sobrenome}
-                              </h4>
-                            ) : (
-                              ''
-                            )
-                          )}
+                  avaliacoes.map((i) =>
+                    i.estado ? (
+                      <article key={i.id} className="col-lg-6">
+                        <figure className="tm-person">
+                          <img
+                            src="/img/about-01.jpg"
+                            alt="Image"
+                            className="cmtfoto img-fluid tm-person-img"
+                          />
+                          <figcaption className="tm-person-description">
+                            {usuario.map((user) =>
+                              user.id == i.user_id ? (
+                                <h4 className="tm-person-name">
+                                  {user.nome} {user.sobrenome}
+                                </h4>
+                              ) : (
+                                ''
+                              )
+                            )}
 
-                          <p className="tm-person-title">{i.nota}</p>
-                          <p className="tm-person-about">{i.comentario}</p>
-                        </figcaption>
-                      </figure>
-                    </article>
-                  ))}
+                            <p className="tm-person-title">{i.nota}</p>
+                            <p className="tm-person-about">{i.comentario}</p>
+                          </figcaption>
+                        </figure>
+                      </article>
+                    ) : (
+                      ''
+                    )
+                  )}
               </div>
             </div>
             <div className="tm-container-inner tm-featured-image">

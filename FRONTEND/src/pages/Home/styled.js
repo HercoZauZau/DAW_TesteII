@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 
 export const ProfileContainer = styled.div``;
 
+export const Main = styled.div`
+  .pointer {
+    cursor: pointer;
+  }
+
+  .mb10 {
+    margin-bottom: 20px;
+  }
+`;
+
 export const ProfilePicture = styled(Link)`
   &:hover {
     /* background-color: #333; */
