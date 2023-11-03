@@ -112,24 +112,41 @@ export const ProfilePicture = styled.div`
 //   }
 // `;
 
-// export const AddPhotos = styled.form`
-//   position: absolute;
-//   bottom: 15px;
-//   left: 75%;
+export const ResData = styled.div`
+  text-align: center;
+  margin-bottom: 100px;
 
-//   label {
-//     width: 36px;
-//     height: 36px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     background: ${colors.primaryColor};
-//     cursor: pointer;
-//     border-radius: 50%;
-//     color: #fff;
-//   }
+  h4 {
+    margin-top: 20px;
+  }
 
-//   input {
-//     display: none;
-//   }
-// `;
+  span {
+    margin-right: 20px;
+
+    &:first-of-type button {
+      background-color: green;
+    }
+  }
+`;
+
+export const AddPhotos = styled.form`
+  position: absolute;
+  bottom: 15px;
+  left: 75%;
+
+  label {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #fff;
+  }
+
+  input {
+    display: none;
+  }
+`;

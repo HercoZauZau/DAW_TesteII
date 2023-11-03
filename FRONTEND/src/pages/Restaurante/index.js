@@ -21,6 +21,7 @@ import {
   PhotosContainer,
   ProfileContainer,
   AddPhotos,
+  ResData,
   Main,
 } from './styled';
 
@@ -135,43 +136,47 @@ export default function Profile() {
 
       <body>
         <div className="container">
-          {/* {id && (
+          {id && (
             <AddPhotos>
               <label htmlFor="foto">
                 <input type="file" id="foto" onChange={handleChange} />
                 <FaPlus />
               </label>
             </AddPhotos>
-          </ProfilePicture>
-        )} */}
+          )}
 
-          {/* <span>
-          Nota media:
-          {avaliacoes.length > 0 ? (media / avaliacoes.length).toFixed(1) : 0}
-        </span>
-
-        */}
           <ProfilePicture>
             {photos.length > 0 && <img src={String(photos[0].url)} alt="" />}
           </ProfilePicture>
 
           <div>
-            <header className="row tm-welcome-section">
-              <h2 className="col-12 text-center tm-section-title">{name}</h2>
-              <p className="col-12 text-center">{info}</p>
-            </header>
+            <ResData>
+              <header className="row tm-welcome-section">
+                <h2 className="col-12 text-center tm-section-title">{name}</h2>
+                <p className="col-12 text-center">{info}</p>
+              </header>
 
-            <Link to={`/novorest/${id}`}>
-              <button type="button">Editar</button>
-            </Link>
+              <span>
+                <Link to={`/novorest/${id}`}>
+                  <button type="button">EDITAR</button>
+                </Link>
+              </span>
 
-            <h3>Fotos</h3>
+              {/* <h3>Fotos</h3> */}
 
-            <div>
-              <Link to={`/avaliacao/${id}`}>
-                <button type="button">AVALIAR</button>
-              </Link>
-            </div>
+              <span>
+                <Link to={`/avaliacao/${id}`}>
+                  <button type="button">AVALIAR</button>
+                </Link>
+              </span>
+
+              <h4>
+                Nota media:
+                {avaliacoes.length > 0
+                  ? (media / avaliacoes.length).toFixed(1)
+                  : 0}
+              </h4>
+            </ResData>
 
             <div className="tm-container-inner tm-persons">
               <div className="row">
@@ -196,8 +201,10 @@ export default function Profile() {
                               )
                             )}
 
-                            <p className="tm-person-title">{i.nota}</p>
-                            <p className="tm-person-about">{i.comentario}</p>
+                            <p className="tm-person-title">Nota: {i.nota}</p>
+                            <p className="tm-person-about">
+                              Comentario: {i.comentario}
+                            </p>
                           </figcaption>
                         </figure>
                       </article>
@@ -226,12 +233,11 @@ export default function Profile() {
                   <div className="tm-feature">
                     <i className="fas fa-4x fa-pepper-hot tm-feature-icon" />
                     <p className="tm-feature-description">
-                      Donec sed orci fermentum, convallis lacus id, tempus elit.
-                      Sed eu neque accumsan, porttitor arcu a, interdum est.
-                      Donec in risus eu ante.
+                      Sabor incomparável a cada mordida! Venha saborear nossos
+                      pratos deliciosos no Restaurante hoje mesmo.
                     </p>
-                    <a href="index.html" className="tm-btn tm-btn-primary">
-                      Read More
+                    <a href="/" className="tm-btn tm-btn-primary">
+                      Leia Mais
                     </a>
                   </div>
                 </div>
@@ -239,12 +245,12 @@ export default function Profile() {
                   <div className="tm-feature">
                     <i className="fas fa-4x fa-seedling tm-feature-icon" />
                     <p className="tm-feature-description">
-                      Maecenas pretium rutrum molestie. Duis dignissim egestas
-                      turpis sit. Nam sed suscipit odio. Morbi in dolor finibus,
-                      consequat nisl eget.
+                      O ambiente perfeito para encontros memoráveis. Faça uma
+                      reserva no Restaurante e desfrute de momentos
+                      inesquecíveis com a família e amigos.
                     </p>
-                    <a href="index.html" className="tm-btn tm-btn-success">
-                      Read More
+                    <a href="/" className="tm-btn tm-btn-success">
+                      Leia Mais
                     </a>
                   </div>
                 </div>
@@ -252,12 +258,12 @@ export default function Profile() {
                   <div className="tm-feature">
                     <i className="fas fa-4x fa-cocktail tm-feature-icon" />
                     <p className="tm-feature-description">
-                      Morbi in dolor finibus, consequat nisl eget, pretium nunc.
-                      Maecenas pretium rutrum molestie. Duis dignissim egestas
-                      turpis sit.
+                      Chefes apaixonados, ingredientes frescos, sabores
+                      autênticos. Experimente a excelência culinária no
+                      Restaurante.
                     </p>
-                    <a href="index.html" className="tm-btn tm-btn-danger">
-                      Read More
+                    <a href="/" className="tm-btn tm-btn-danger">
+                      Leia Mais
                     </a>
                   </div>
                 </div>
