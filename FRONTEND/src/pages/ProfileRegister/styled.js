@@ -1,7 +1,40 @@
 import styled from 'styled-components';
 import colors from '../../config/colors';
 
-export const Avalia = styled.div``;
+export const Avalia = styled.div`
+  border-radius: 20px;
+  border: 1px solid;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+
+  h4 {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .com {
+    border-radius: 20px;
+    border: 1px solid;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+
+    .red {
+      color: red;
+    }
+
+    &:hover {
+      /* background-color: grey; */
+      /* cursor: pointer; */
+    }
+
+    p {
+      color: white;
+    }
+  }
+`;
 
 export const Form = styled.form`
   margin: 30px;

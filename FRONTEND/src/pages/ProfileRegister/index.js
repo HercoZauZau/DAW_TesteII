@@ -4,7 +4,7 @@
 import React from 'react';
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import axios from '../../services/axios';
@@ -162,6 +162,8 @@ export default function ProfileRegister() {
       </Form>
 
       <Avalia>
+        <h4>Avaliações</h4>
+
         {id &&
           avaliacoes.length > 0 &&
           avaliacoes.map((i) => (
@@ -169,10 +171,14 @@ export default function ProfileRegister() {
               {restaurantes.map((r) => {
                 if (r.id == i.rest_id) {
                   return (
-                    <div key={r.id}>
-                      <span>Nome do Restaurante: {r.nome}</span>
-                      <span>Comentário: {i.comentario}</span>
-                      <span>Nota: {i.nota}</span>
+                    <div className="com" key={r.id}>
+                      <p>Restaurante: {r.nome}</p>
+                      <p>Comentário: {i.comentario}</p>
+                      <p>Nota: {i.nota}</p>
+
+                      <Link className="red" to={`/restaurante/${r.id}`}>
+                        Editar
+                      </Link>
                     </div>
                   );
                 }
