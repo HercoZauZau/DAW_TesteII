@@ -79,7 +79,7 @@ export default function ProfileRegister() {
         await axios.put(`/avaliacao/${avaliacaoID}`, {
           // user_id: toInteger(userId),
           // rest_id: toInteger(id),
-          // nota: 0,
+          nota,
           comentario,
           estado: excluido,
         });
@@ -89,7 +89,7 @@ export default function ProfileRegister() {
         await axios.post('/avaliacao', {
           user_id: toInteger(userId),
           rest_id: toInteger(id),
-          nota: 5,
+          nota,
           comentario,
           estado: excluido,
         });
@@ -122,20 +122,24 @@ export default function ProfileRegister() {
       <h1>{notaExiste ? 'Editar Avaliação' : 'Registar Avaliação'}</h1>
 
       <Form onSubmit={handleSubmit}>
-        <span>
-          <BsFillStarFill />
-          <BsFillStarFill />
-          <BsFillStarFill />
-          <BsFillStarFill />
-          <BsFillStarFill />
-        </span>
+        <label htmlFor="nota">
+          <span>Nota</span>
 
-        <span>{nota}</span>
+          <input
+            type="number"
+            min={0}
+            max={5}
+            value={nota}
+            onChange={(e) => setNota(e.target.value)}
+          />
+        </label>
 
         <label htmlFor="comentario">
           <span>Comentario</span>
 
           <textarea
+            rows="5"
+            cols="45"
             value={comentario}
             onChange={(e) => setComentario(e.target.value)}
           />
