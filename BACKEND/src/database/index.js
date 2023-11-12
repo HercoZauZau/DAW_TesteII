@@ -4,8 +4,10 @@ import Restaurante from '../models/Restaurante';
 import Usuario from '../models/Usuario';
 import FotoR from '../models/FotoR';
 import Avaliacao from '../models/Avaliacao';
+import Menu from '../models/Menu';
+import Prato from '../models/Prato';
 
-const models = [Restaurante, Usuario, FotoR, Avaliacao];
+const models = [Restaurante, Usuario, FotoR, Avaliacao, Menu, Prato];
 
 const connection = new Sequelize(databaseConfig);
 

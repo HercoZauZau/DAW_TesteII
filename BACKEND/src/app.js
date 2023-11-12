@@ -12,6 +12,8 @@ import homeRoutes from './routes/homeRoutes';
 import userRoutes from './routes/userRoutes';
 import tokenRoutes from './routes/tokenRoutes';
 import avaliacaoRoutes from './routes/avaliacaoRoutes';
+import menuRoutes from './routes/menuRoutes';
+import pratoRoutes from './routes/pratoRoutes';
 import restauranteRoutes from './routes/restauranteRoutes';
 import fotoRoutes from './routes/fotoRoutes';
 
@@ -50,6 +52,8 @@ class App {
     this.app.use('/usuario/', userRoutes);
     this.app.use('/restaurante/', restauranteRoutes);
     this.app.use('/avaliacao/', avaliacaoRoutes);
+    this.app.use('/menu/', menuRoutes);
+    this.app.use('/prato/', pratoRoutes);
     this.app.use('/tokens/', tokenRoutes);
     this.app.use('/fotos/', fotoRoutes);
   }
