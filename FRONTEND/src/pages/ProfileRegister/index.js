@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-const */
 import React from 'react';
-import { get } from 'lodash';
+import { get, toInteger } from 'lodash';
 import { toast } from 'react-toastify';
 import { useParams, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import axios from '../../services/axios';
 import { Container } from '../../styles/GlobalStyles';
@@ -16,6 +19,8 @@ import { Form, Avalia } from './styled';
 export default function ProfileRegister() {
   const dispatch = useDispatch();
 
+  const userId = useSelector((state) => state.auth.user.id);
+
   const { id } = useParams();
   const [nome, setNome] = React.useState('');
   const [sobrenome, setSobrenome] = React.useState('');
@@ -23,7 +28,9 @@ export default function ProfileRegister() {
   const [password, setPassword] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [avaliacoes, setAvaliacoes] = React.useState([]);
+  // const [media, setMedia] = React.useState(0);
   const [restaurantes, setRestaurantes] = React.useState([]);
+  const [prato, setPrato] = React.useState([]);
 
   React.useEffect(() => {
     if (!id) return;
@@ -35,6 +42,7 @@ export default function ProfileRegister() {
         const { data } = await axios.get(`/usuario/${id}`);
         const restaurante = await axios.get(`/restaurante`);
         const avaliacao = await axios.get(`/avaliacao`);
+        const pratos = await axios.get(`/menu/${userId}`);
 
         let lista = [];
 
@@ -47,6 +55,14 @@ export default function ProfileRegister() {
         }
 
         setRestaurantes([...restaurante.data]);
+        setPrato([...pratos.data]);
+
+        // let total = 0;
+
+        // for (let i = 0; i < prato.length; i++) {
+        //   // total += toInteger(prato[i].um);
+        //   setMedia(media + toInteger(prato[i].um));
+        // }
 
         setNome(data.nome);
         setSobrenome(data.sobrenome);
@@ -66,6 +82,33 @@ export default function ProfileRegister() {
 
     getData();
   }, [id]);
+
+  const handleDelete = async (e, pId) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+
+      await axios.delete(`/menu/${pId}`);
+
+      toast.success('Prato eliminado com sucesso');
+
+      setIsLoading(false);
+
+      window.location.reload(false);
+    } catch (error) {
+      setIsLoading(false);
+
+      const data = get(error, 'response.data', {});
+      const errors = get(data, 'errors', []);
+
+      if (errors.length > 0) {
+        errors.map((err) => toast.error(err));
+      } else {
+        toast.error('Erro desconhecido');
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -186,6 +229,27 @@ export default function ProfileRegister() {
               })}
             </div>
           ))}
+      </Avalia>
+
+      <Avalia>
+        <h4>Pratos</h4>
+
+        {id &&
+          prato.length > 0 &&
+          prato.map((i) => (
+            <div
+              onClick={(e) => {
+                handleDelete(e, i.id);
+              }}
+              className="menu"
+              key={i.id}
+            >
+              <span>{i.prato}</span>
+              <span>{i.um} MZN</span>
+            </div>
+          ))}
+
+        {/* <h3>Total: {media} MZN</h3> */}
       </Avalia>
     </Container>
   );

@@ -18,7 +18,6 @@ export default function ProfileRegister() {
   const [info, setInfo] = React.useState('');
   const [horario, setHorario] = React.useState('');
   const [local, setLocal] = React.useState('');
-  const [cozinha, setCozinha] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -32,7 +31,6 @@ export default function ProfileRegister() {
 
         setNome(data.nome);
         setInfo(data.info);
-        setCozinha(data.cozinha);
         setHorario(data.horario);
         setLocal(data.local);
 
@@ -60,7 +58,6 @@ export default function ProfileRegister() {
         await axios.put(`/restaurante/${id}`, {
           nome,
           info,
-          cozinha,
           horario,
           local,
         });
@@ -70,7 +67,6 @@ export default function ProfileRegister() {
         await axios.post('/restaurante/', {
           nome,
           info,
-          cozinha,
           horario,
           local,
         });
@@ -140,16 +136,6 @@ export default function ProfileRegister() {
             type="text"
             value={local}
             onChange={(e) => setLocal(e.target.value)}
-          />
-        </label>
-
-        <label htmlFor="cozinha">
-          <span>cozinha</span>
-
-          <input
-            type="text"
-            value={cozinha}
-            onChange={(e) => setCozinha(e.target.value)}
           />
         </label>
 

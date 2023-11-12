@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import MySessionRoutes from './MySessionRoutes';
 import Home from '../pages/Home';
+import Menu from '../pages/Menu';
 import Restaurante from '../pages/Restaurante';
 import NovoRestaurante from '../pages/NovoRestaurante';
 import Avaliacao from '../pages/Avaliacao';
@@ -75,6 +76,15 @@ export default function MyRoutes() {
         element={
           <MySessionRoutes>
             <ProfileRegister />
+          </MySessionRoutes>
+        }
+      />
+
+      <Route
+        path="/menu/:id"
+        element={
+          <MySessionRoutes>
+            <Menu />
           </MySessionRoutes>
         }
       />

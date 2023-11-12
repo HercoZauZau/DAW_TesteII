@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { FaUserCircle, FaPlus } from 'react-icons/fa';
-import { BsFillStarFill } from 'react-icons/bs';
+import { BsFillStarFill, BsPlus, BsPlusCircle } from 'react-icons/bs';
 
 import axios from '../../services/axios';
 import Loading from '../../components/Loading';
@@ -35,6 +35,7 @@ export default function Profile() {
   const [cozinha, setCozinha] = React.useState('');
   const [media, setMedia] = React.useState(0);
   const [avaliacoes, setAvaliacoes] = React.useState([]);
+  const [menu, setMenu] = React.useState([]);
   const [photos, setPhotos] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -50,11 +51,15 @@ export default function Profile() {
         setIsLoading(true);
 
         const { data } = await axios.get(`/restaurante/${id}`);
+        const menus = await axios.get(`/prato/${id}`);
         const avaliacao = await axios.get(`/avaliacao`);
         const usuarios = await axios.get(`/usuario`);
         const Photos = get(data, 'FotoRs', '');
 
+        // console.log(data);
+
         setUsuario(usuarios.data);
+        setMenu(menus.data);
 
         let lista = [];
         let notaMedia = 0;
@@ -75,6 +80,8 @@ export default function Profile() {
         setInfo(data.info);
         setLocal(data.local);
         setPhotos([...Photos]);
+
+        console.log('pp', photos);
 
         setIsLoading(false);
       } catch (error) {
@@ -118,6 +125,39 @@ export default function Profile() {
       toast.error('Erro ao enviar a foto');
 
       if (status === 401) dispatch(actions.loginFailure());
+    }
+  };
+
+  const handleBuy = async (e, nome, preco) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+
+      if (userId) {
+        await axios.post('/menu', {
+          user_id: toInteger(userId),
+          rest_id: toInteger(id),
+          prato: nome,
+          um: preco,
+          estado: true,
+        });
+      }
+
+      toast.success(`${nome} comprado(a) com sucesso`);
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+
+      const data = get(error, 'response.data', {});
+      const errors = get(data, 'errors', []);
+
+      if (errors.length > 0) {
+        errors.map((err) => toast.error(err));
+      } else {
+        toast.error('Erro desconhecido');
+      }
     }
   };
 
@@ -170,6 +210,12 @@ export default function Profile() {
                 </Link>
               </span>
 
+              <span>
+                <Link to={`/menu/${id}`}>
+                  <button type="button">MENU</button>
+                </Link>
+              </span>
+
               <h4>
                 Nota media:
                 {avaliacoes.length > 0
@@ -178,18 +224,15 @@ export default function Profile() {
               </h4>
             </ResData>
 
+            <h2 className="col-12 text-center tm-section-title">Comentarios</h2>
+
             <div className="tm-container-inner tm-persons">
               <div className="row">
                 {avaliacoes.length > 0 &&
                   avaliacoes.map((i) =>
                     i.estado ? (
-                      <article key={i.id} className="col-lg-6">
-                        <figure className="tm-person">
-                          <img
-                            src="/img/about-01.jpg"
-                            alt="Image"
-                            className="cmtfoto img-fluid tm-person-img"
-                          />
+                      <article key={i.id} className="">
+                        <figure className="tm-person comment">
                           <figcaption className="tm-person-description">
                             {usuario.map((user) =>
                               user.id == i.user_id ? (
@@ -212,6 +255,28 @@ export default function Profile() {
                       ''
                     )
                   )}
+              </div>
+
+              <div>
+                <h2 className="col-12 text-center tm-section-title">Menu</h2>
+
+                <div className="pratos">
+                  {menu.length > 0 &&
+                    menu.map((i) => (
+                      <div className="prt">
+                        <p className="tm-person-name">{i.nome}</p>
+                        <p className="tm-person-title">{i.um} MZN</p>
+                        <button
+                          onClick={(e) => {
+                            handleBuy(e, i.nome, i.um);
+                          }}
+                          type="button"
+                        >
+                          comprar
+                        </button>
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
             <div className="tm-container-inner tm-featured-image">

@@ -1,74 +1,34 @@
 import styled from 'styled-components';
 import colors from '../../config/colors';
 
-export const Avalia = styled.div`
-  border-radius: 20px;
-  border: 1px solid;
-  padding: 20px;
-  background-color: #333;
-  color: white;
+export const Main = styled.main`
+  text-align: center;
 
-  h3 {
-    padding-top: 20px;
+  .pratos {
     margin: auto;
     text-align: center;
-    color: green;
-  }
 
-  .menu {
-    cursor: pointer;
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    div {
+      /* width: 100px; */
+      width: fit-content;
+      text-align: start;
+      margin: 10px auto;
+      font-weight: bold;
+      cursor: pointer;
 
-    &:hover {
-      span:first-of-type {
-        text-decoration: line-through;
+      &:hover {
         color: red;
       }
-    }
-
-    span {
-      margin: 0px 5px;
-      /* padding-top: 20px; */
-
-      &:last-of-type {
-        color: green;
-      }
-    }
-  }
-
-  h4 {
-    margin: auto;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .com {
-    border-radius: 20px;
-    border: 1px solid;
-    padding: 20px;
-    margin-bottom: 20px;
-    color: white;
-
-    .red {
-      color: red;
-    }
-
-    &:hover {
-      /* background-color: grey; */
-      /* cursor: pointer; */
-    }
-
-    p {
-      color: white;
     }
   }
 `;
 
 export const Form = styled.form`
-  margin: 30px;
+  margin: 30px auto;
+  width: 20%;
+  border: 1px solid;
+  padding: 20px;
+  border-radius: 10px;
 
   input {
     width: 100%;

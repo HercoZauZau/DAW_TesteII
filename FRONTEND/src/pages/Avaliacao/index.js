@@ -5,7 +5,6 @@ import { get, toInteger } from 'lodash';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { BsFillStarFill } from 'react-icons/bs';
 import axios from '../../services/axios';
 import { Container } from '../../styles/GlobalStyles';
 import * as actions from '../../store/modules/auth/actions';
